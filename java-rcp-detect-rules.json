@@ -1,0 +1,374 @@
+{
+  "rules": [
+    {
+      "ruleId": "rcp-java-0001",
+      "ruleName": "ECS Cloud Map Service Discovery",
+      "version": "1.0",
+      "status": "active",
+      "parser": "REGEX",
+      "language": {
+        "name": "java",
+        "versions": ["8", "11", "17", "21"],
+        "frameworks": ["spring-boot:3.0", "jakarta-ee:10"]
+      },
+      "scope": null,
+      "detectionCriteria": {
+        "fileType": ["java", "properties", "yml"],
+        "searchPattern": [
+          "servicediscovery\\.client",
+          "servicediscovery\\.discover_instances",
+          "Cloud\\s*Map",
+          "boto3\\.client\\([\\'\\\"]servicediscovery[\\'\\\"]\\)"
+        ]
+      }
+    },
+    {
+      "ruleId": "rcp-java-0002",
+      "ruleName": "Consul Service Discovery",
+      "version": "1.0",
+      "status": "active",
+      "parser": "REGEX",
+      "language": {
+        "name": "java",
+        "versions": ["8", "11", "17", "21"],
+        "frameworks": ["spring-boot:3.0", "jakarta-ee:10"]
+      },
+      "scope": null,
+      "detectionCriteria": {
+        "fileType": ["java", "properties", "xml"],
+        "searchPattern": [
+          "import\\s+consul",
+          "consul\\.Consul",
+          "consul\\.catalog",
+          "consul\\.health\\.service"
+        ]
+      }
+    },
+    {
+      "ruleId": "rcp-java-0003",
+      "ruleName": "Eureka Service Discovery",
+      "version": "1.0",
+      "status": "active",
+      "parser": "REGEX",
+      "language": {
+        "name": "java",
+        "versions": ["8", "11", "17", "21"],
+        "frameworks": ["spring-boot:3.0", "jakarta-ee:10"]
+      },
+      "scope": null,
+      "detectionCriteria": {
+        "fileType": ["java", "properties"],
+        "searchPattern": [
+          "@EnableEurekaClient",
+          "eureka\\.client",
+          "netflix\\.eureka"
+        ]
+      }
+    },
+    {
+      "ruleId": "rcp-java-0004",
+      "ruleName": "AWS Parameter Store Usage",
+      "version": "1.0",
+      "status": "active",
+      "parser": "REGEX",
+      "language": {
+        "name": "java",
+        "versions": ["8", "11", "17", "21"],
+        "frameworks": ["spring-boot:3.0", "jakarta-ee:10"]
+      },
+      "scope": null,
+      "detectionCriteria": {
+        "fileType": ["java", "properties", "yml"],
+        "searchPattern": [
+          "ssm\\.get_parameter",
+          "boto3\\.client\\([\\'\\\"]ssm[\\'\\\"]\\)",
+          "GetParameter",
+          "get_parameters_by_path"
+        ]
+      }
+    },
+    {
+      "ruleId": "rcp-java-0005",
+      "ruleName": "AWS Secrets Manager Usage",
+      "version": "1.0",
+      "status": "active",
+      "parser": "REGEX",
+      "language": {
+        "name": "java",
+        "versions": ["8", "11", "17", "21"],
+        "frameworks": ["spring-boot:3.0", "jakarta-ee:10"]
+      },
+      "scope": null,
+      "detectionCriteria": {
+        "fileType": ["java", "properties", "yml"],
+        "searchPattern": [
+          "secretsmanager\\.get_secret_value",
+          "boto3\\.client\\([\\'\\\"]secretsmanager[\\'\\\"]\\)",
+          "GetSecretValue"
+        ]
+      }
+    },
+    {
+      "ruleId": "rcp-java-0006",
+      "ruleName": "Direct Vault Access (HCOM/EWE/VRBO)",
+      "version": "1.0",
+      "status": "active",
+      "parser": "REGEX",
+      "language": {
+        "name": "java",
+        "versions": ["8", "11", "17", "21"],
+        "frameworks": ["spring-boot:3.0", "jakarta-ee:10"]
+      },
+      "scope": null,
+      "detectionCriteria": {
+        "fileType": ["java", "properties", "yml"],
+        "searchPattern": [
+          "HCOM[_\\s]*Vault",
+          "EWE[_\\s]*Vault",
+          "VRBO[_\\s]*Vault",
+          "hvac\\.Client.*vault\\.hcom",
+          "hvac\\.Client.*vault\\.ewe"
+        ]
+      }
+    },
+    {
+      "ruleId": "rcp-java-0007",
+      "ruleName": "ECS Task Metadata Access",
+      "version": "1.0",
+      "status": "active",
+      "parser": "REGEX",
+      "language": {
+        "name": "java",
+        "versions": ["8", "11", "17", "21"],
+        "frameworks": ["spring-boot:3.0", "jakarta-ee:10"]
+      },
+      "scope": null,
+      "detectionCriteria": {
+        "fileType": ["java", "properties", "yml"],
+        "searchPattern": [
+          "169\\.254\\.170\\.2",
+          "ECS_CONTAINER_METADATA_URI",
+          "ECS_TASK_METADATA",
+          "/v[234]/metadata"
+        ]
+      }
+    },
+    {
+      "ruleId": "rcp-java-0008",
+      "ruleName": "EC2 Instance Metadata Access",
+      "version": "1.0",
+      "status": "active",
+      "parser": "REGEX",
+      "language": {
+        "name": "java",
+        "versions": ["8", "11", "17", "21"],
+        "frameworks": ["spring-boot:3.0", "jakarta-ee:10"]
+      },
+      "scope": null,
+      "detectionCriteria": {
+        "fileType": ["java", "properties", "yml"],
+        "searchPattern": [
+          "169\\.254\\.169\\.254",
+          "instance-identity",
+          "ec2\\.metadata"
+        ]
+      }
+    },
+    {
+      "ruleId": "rcp-java-0009",
+      "ruleName": "Missing Health Check Endpoints",
+      "version": "1.0",
+      "status": "active",
+      "parser": "REGEX",
+      "language": {
+        "name": "java",
+        "versions": ["8", "11", "17", "21"],
+        "frameworks": ["spring-boot:3.0", "jakarta-ee:10"]
+      },
+      "scope": null,
+      "detectionCriteria": {
+        "fileType": ["java", "properties", "yml"],
+        "searchPattern": [
+          "/health",
+          "/healthz",
+          "@GetMapping.*health",
+          "@RequestMapping.*health",
+          "app\\.route\\([\\'\\\"].*health"
+        ]
+      }
+    },
+    {
+      "ruleId": "rcp-java-0010",
+      "ruleName": "CloudWatch Direct Logging",
+      "version": "1.0",
+      "status": "active",
+      "parser": "REGEX",
+      "language": {
+        "name": "java",
+        "versions": ["8", "11", "17", "21"],
+        "frameworks": ["spring-boot:3.0", "jakarta-ee:10"]
+      },
+      "scope": null,
+      "detectionCriteria": {
+        "fileType": ["java", "xml", "properties"],
+        "searchPattern": [
+          "import\\s+watchtower",
+          "CloudWatchLogHandler",
+          "boto3\\.client\\([\\'\\\"]logs[\\'\\\"]\\)",
+          "put_log_events"
+        ]
+      }
+    },
+    {
+      "ruleId": "rcp-java-0011",
+      "ruleName": "Platform-Specific Logging Drivers",
+      "version": "1.0",
+      "status": "active",
+      "parser": "REGEX",
+      "language": {
+        "name": "java",
+        "versions": ["8", "11", "17", "21"],
+        "frameworks": ["spring-boot:3.0", "jakarta-ee:10"]
+      },
+      "scope": null,
+      "detectionCriteria": {
+        "fileType": ["yml", "yaml", "properties", "conf"],
+        "searchPattern": [
+          "awslogs",
+          "log_driver.*awslogs",
+          "fluentd.*ecs"
+        ]
+      }
+    },
+    {
+      "ruleId": "rcp-java-0012",
+      "ruleName": "Hardcoded AWS Credentials",
+      "version": "1.0",
+      "status": "active",
+      "parser": "REGEX",
+      "language": {
+        "name": "java",
+        "versions": ["8", "11", "17", "21"],
+        "frameworks": ["spring-boot:3.0", "jakarta-ee:10"]
+      },
+      "scope": null,
+      "detectionCriteria": {
+        "fileType": ["java", "properties", "yml"],
+        "searchPattern": [
+          "aws_access_key_id\\s*=",
+          "aws_secret_access_key\\s*=",
+          "AWS_ACCESS_KEY",
+          "AWS_SECRET_KEY"
+        ]
+      }
+    },
+    {
+      "ruleId": "rcp-java-0013",
+      "ruleName": "ECS Task Role Assumptions",
+      "version": "1.0",
+      "status": "active",
+      "parser": "REGEX",
+      "language": {
+        "name": "java",
+        "versions": ["8", "11", "17", "21"],
+        "frameworks": ["spring-boot:3.0", "jakarta-ee:10"]
+      },
+      "scope": null,
+      "detectionCriteria": {
+        "fileType": ["java", "properties", "yml"],
+        "searchPattern": [
+          "ECS_TASK_ROLE",
+          "task[-_]role",
+          "get_credentials.*ecs"
+        ]
+      }
+    },
+    {
+      "ruleId": "rcp-java-0014",
+      "ruleName": "ECS-Specific API Calls",
+      "version": "1.0",
+      "status": "active",
+      "parser": "REGEX",
+      "language": {
+        "name": "java",
+        "versions": ["8", "11", "17", "21"],
+        "frameworks": ["spring-boot:3.0", "jakarta-ee:10"]
+      },
+      "scope": null,
+      "detectionCriteria": {
+        "fileType": ["java", "properties", "yml"],
+        "searchPattern": [
+          "boto3\\.client\\([\\'\\\"]ecs[\\'\\\"]\\)",
+          "ecs\\.describe_tasks",
+          "ecs\\.list_tasks",
+          "ecs\\.run_task"
+        ]
+      }
+    },
+    {
+      "ruleId": "rcp-java-0015",
+      "ruleName": "Docker Compose Dependencies",
+      "version": "1.0",
+      "status": "active",
+      "parser": "REGEX",
+      "language": {
+        "name": "java",
+        "versions": ["8", "11", "17", "21"],
+        "frameworks": ["spring-boot:3.0", "jakarta-ee:10"]
+      },
+      "scope": null,
+      "detectionCriteria": {
+        "fileType": ["yml", "yaml"],
+        "searchPattern": [
+          "depends_on:",
+          "docker-compose",
+          "docker_compose"
+        ]
+      }
+    },
+    {
+      "ruleId": "rcp-java-0016",
+      "ruleName": "Platform-Specific APM Configuration",
+      "version": "1.0",
+      "status": "active",
+      "parser": "REGEX",
+      "language": {
+        "name": "java",
+        "versions": ["8", "11", "17", "21"],
+        "frameworks": ["spring-boot:3.0", "jakarta-ee:10"]
+      },
+      "scope": null,
+      "detectionCriteria": {
+        "fileType": ["java", "properties", "yml"],
+        "searchPattern": [
+          "DD_AGENT_HOST.*169\\.254",
+          "statsd.*ecs",
+          "DD_ECS_COLLECT"
+        ]
+      }
+    },
+    {
+      "ruleId": "rcp-java-0017",
+      "ruleName": "Missing Graceful Shutdown Handling",
+      "version": "1.0",
+      "status": "active",
+      "parser": "REGEX",
+      "language": {
+        "name": "java",
+        "versions": ["8", "11", "17", "21"],
+        "frameworks": ["spring-boot:3.0", "jakarta-ee:10"]
+      },
+      "scope": null,
+      "detectionCriteria": {
+        "fileType": ["java"],
+        "searchPattern": [
+          "Runtime\\.getRuntime\\(\\)\\.addShutdownHook",
+          "@PreDestroy",
+          "shutdown\\s*hook",
+          "spring\\.lifecycle\\.timeout-per-shutdown-phase"
+        ]
+      }
+    }
+  ]
+}
+

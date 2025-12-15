@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+    <Appenders>
+        <!-- CloudWatch Direct Logging - CloudWatchLogHandler pattern -->
+        <CloudWatchLogHandler name="CloudWatch">
+            <logGroupName>ecs-sample-app</logGroupName>
+            <logStreamName>application</logStreamName>
+        </CloudWatchLogHandler>
+    </Appenders>
+    
+    <Loggers>
+        <Root level="INFO">
+            <AppenderRef ref="CloudWatch"/>
+        </Root>
+    </Loggers>
+</Configuration>
+

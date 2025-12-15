@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!-- CloudWatch Direct Logging Configuration -->
+    <!-- CloudWatchLogHandler pattern -->
+    
+    <appender name="CLOUDWATCH" class="com.expedia.ecs.logging.CloudWatchLogHandler">
+        <logGroupName>ecs-sample-app</logGroupName>
+        <logStreamName>application</logStreamName>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="CLOUDWATCH" />
+    </root>
+</configuration>
+

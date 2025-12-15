@@ -1,0 +1,78 @@
+spring:
+  application:
+    name: ecs-sample-app
+  cloud:
+    # Eureka client configuration - eureka.client pattern
+    eureka:
+      client:
+        service-url:
+          defaultZone: http://eureka-server:8761/eureka/
+        register-with-eureka: true
+        fetch-registry: true
+
+server:
+  port: 8080
+
+aws:
+  # Hardcoded AWS credentials - aws_access_key_id and aws_secret_access_key patterns
+  access:
+    key:
+      id: AKIAIOSFODNN7EXAMPLE
+  secret:
+    access:
+      key: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+  # AWS_ACCESS_KEY and AWS_SECRET_KEY patterns
+  credentials:
+    access-key: ${AWS_ACCESS_KEY:AKIAIOSFODNN7EXAMPLE}
+    secret-key: ${AWS_SECRET_KEY:wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY}
+
+ecs:
+  # ECS Task Role - task-role pattern
+  task:
+    role:
+      arn: arn:aws:iam::123456789012:role/ecs-task-role
+  # ECS Task Metadata - ECS_CONTAINER_METADATA_URI and /v4/metadata patterns
+  container:
+    metadata:
+      uri: ${ECS_CONTAINER_METADATA_URI:http://169.254.170.2/v4/metadata}
+  task:
+    metadata:
+      uri: http://169.254.170.2/v4/metadata
+
+ec2:
+  # EC2 Instance Metadata - 169.254.169.254 and instance-identity patterns
+  metadata:
+    uri: http://169.254.169.254/latest/meta-data/
+  instance:
+    identity:
+      uri: http://169.254.169.254/latest/dynamic/instance-identity/document
+
+cloudwatch:
+  # CloudWatch logging configuration
+  log:
+    group: ecs-sample-app
+    stream: application
+
+datadog:
+  # Platform-Specific APM Configuration
+  # DD_AGENT_HOST.*169.254 and DD_ECS_COLLECT patterns
+  agent:
+    host: 169.254.170.2
+  ecs:
+    collect: ${DD_ECS_COLLECT:true}
+  statsd:
+    ecs:
+      enabled: true
+
+vault:
+  # Direct Vault Access - HCOM/EWE/VRBO Vault patterns
+  hcom:
+    endpoint: https://vault.hcom.expedia.com
+  ewe:
+    endpoint: https://vault.ewe.expedia.com
+  vrbo:
+    endpoint: https://vault.vrbo.expedia.com
+
+# Note: No /health or /healthz endpoints configured
+# Note: No spring.lifecycle.timeout-per-shutdown-phase configured
+
