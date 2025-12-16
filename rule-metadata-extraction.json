@@ -1,0 +1,581 @@
+{
+  "metadata": {
+    "extractionDate": "2024-12-19",
+    "totalRules": 17,
+    "rules": [
+      {
+        "ruleId": "rcp-java-0001",
+        "ruleName": "ECS Cloud Map Service Discovery",
+        "version": "1.0",
+        "status": "active",
+        "parser": "REGEX",
+        "priority": "HIGH",
+        "severity": "HIGH",
+        "severityWeight": 15,
+        "category": "SERVICE_DISCOVERY",
+        "subCategory": "Container Platform Dependencies",
+        "blockerType": "HIGH Priority Blocker",
+        "language": {
+          "name": "java",
+          "versions": ["8", "11", "17", "21"],
+          "frameworks": ["spring-boot:3.0", "jakarta-ee:10"]
+        },
+        "scope": null,
+        "detectionCriteria": {
+          "fileType": ["java", "properties", "yml"],
+          "searchPattern": [
+            "servicediscovery\\.client",
+            "servicediscovery\\.discover_instances",
+            "Cloud\\s*Map",
+            "boto3\\.client\\([\\'\\\"]servicediscovery[\\'\\\"]\\)"
+          ]
+        },
+        "migrationGuidance": "Replace with Kubernetes DNS-based service discovery (service-name.namespace.svc.cluster.local)",
+        "effortEstimate": "8 hours",
+        "dashboardLabel": "ECS Service Discovery"
+      },
+      {
+        "ruleId": "rcp-java-0002",
+        "ruleName": "Consul Service Discovery",
+        "version": "1.0",
+        "status": "active",
+        "parser": "REGEX",
+        "priority": "HIGH",
+        "severity": "HIGH",
+        "severityWeight": 15,
+        "category": "SERVICE_DISCOVERY",
+        "subCategory": "Container Platform Dependencies",
+        "blockerType": "HIGH Priority Blocker",
+        "language": {
+          "name": "java",
+          "versions": ["8", "11", "17", "21"],
+          "frameworks": ["spring-boot:3.0", "jakarta-ee:10"]
+        },
+        "scope": null,
+        "detectionCriteria": {
+          "fileType": ["java", "properties", "xml"],
+          "searchPattern": [
+            "import\\s+consul",
+            "consul\\.Consul",
+            "consul\\.catalog",
+            "consul\\.health\\.service"
+          ]
+        },
+        "migrationGuidance": "Migrate to Kubernetes service discovery",
+        "effortEstimate": "8 hours",
+        "dashboardLabel": "Consul Service Discovery"
+      },
+      {
+        "ruleId": "rcp-java-0003",
+        "ruleName": "Eureka Service Discovery",
+        "version": "1.0",
+        "status": "active",
+        "parser": "REGEX",
+        "priority": "HIGH",
+        "severity": "HIGH",
+        "severityWeight": 15,
+        "category": "SERVICE_DISCOVERY",
+        "subCategory": "Container Platform Dependencies",
+        "blockerType": "HIGH Priority Blocker",
+        "language": {
+          "name": "java",
+          "versions": ["8", "11", "17", "21"],
+          "frameworks": ["spring-boot:3.0", "jakarta-ee:10"]
+        },
+        "scope": null,
+        "detectionCriteria": {
+          "fileType": ["java", "properties"],
+          "searchPattern": [
+            "@EnableEurekaClient",
+            "eureka\\.client",
+            "netflix\\.eureka"
+          ]
+        },
+        "migrationGuidance": "Replace Eureka with Kubernetes service discovery",
+        "effortEstimate": "12 hours",
+        "dashboardLabel": "Eureka Service Discovery"
+      },
+      {
+        "ruleId": "rcp-java-0004",
+        "ruleName": "AWS Parameter Store Usage",
+        "version": "1.0",
+        "status": "active",
+        "parser": "REGEX",
+        "priority": "HIGH",
+        "severity": "HIGH",
+        "severityWeight": 15,
+        "category": "SECRETS_CONFIG",
+        "subCategory": "Container Platform Dependencies",
+        "blockerType": "HIGH Priority Blocker",
+        "language": {
+          "name": "java",
+          "versions": ["8", "11", "17", "21"],
+          "frameworks": ["spring-boot:3.0", "jakarta-ee:10"]
+        },
+        "scope": null,
+        "detectionCriteria": {
+          "fileType": ["java", "properties", "yml"],
+          "searchPattern": [
+            "ssm\\.get_parameter",
+            "boto3\\.client\\([\\'\\\"]ssm[\\'\\\"]\\)",
+            "GetParameter",
+            "get_parameters_by_path"
+          ]
+        },
+        "migrationGuidance": "Migrate to EG Vault with CSI driver or Vault SDK",
+        "effortEstimate": "6 hours",
+        "dashboardLabel": "AWS Parameter Store Direct Access"
+      },
+      {
+        "ruleId": "rcp-java-0005",
+        "ruleName": "AWS Secrets Manager Usage",
+        "version": "1.0",
+        "status": "active",
+        "parser": "REGEX",
+        "priority": "HIGH",
+        "severity": "HIGH",
+        "severityWeight": 15,
+        "category": "SECRETS_CONFIG",
+        "subCategory": "Container Platform Dependencies",
+        "blockerType": "HIGH Priority Blocker",
+        "language": {
+          "name": "java",
+          "versions": ["8", "11", "17", "21"],
+          "frameworks": ["spring-boot:3.0", "jakarta-ee:10"]
+        },
+        "scope": null,
+        "detectionCriteria": {
+          "fileType": ["java", "properties", "yml"],
+          "searchPattern": [
+            "secretsmanager\\.get_secret_value",
+            "boto3\\.client\\([\\'\\\"]secretsmanager[\\'\\\"]\\)",
+            "GetSecretValue"
+          ]
+        },
+        "migrationGuidance": "Migrate to EG Vault integration",
+        "effortEstimate": "6 hours",
+        "dashboardLabel": "AWS Secrets Manager Direct Access"
+      },
+      {
+        "ruleId": "rcp-java-0006",
+        "ruleName": "Direct Vault Access (HCOM/EWE/VRBO)",
+        "version": "1.0",
+        "status": "active",
+        "parser": "REGEX",
+        "priority": "HIGH",
+        "severity": "HIGH",
+        "severityWeight": 15,
+        "category": "SECRETS_CONFIG",
+        "subCategory": "Container Platform Dependencies",
+        "blockerType": "HIGH Priority Blocker",
+        "language": {
+          "name": "java",
+          "versions": ["8", "11", "17", "21"],
+          "frameworks": ["spring-boot:3.0", "jakarta-ee:10"]
+        },
+        "scope": null,
+        "detectionCriteria": {
+          "fileType": ["java", "properties", "yml"],
+          "searchPattern": [
+            "HCOM[_\\s]*Vault",
+            "EWE[_\\s]*Vault",
+            "VRBO[_\\s]*Vault",
+            "hvac\\.Client.*vault\\.hcom",
+            "hvac\\.Client.*vault\\.ewe"
+          ]
+        },
+        "migrationGuidance": "Update Vault endpoint to EG Vault",
+        "effortEstimate": "4 hours",
+        "dashboardLabel": "Platform-Specific Vault Endpoints"
+      },
+      {
+        "ruleId": "rcp-java-0007",
+        "ruleName": "ECS Task Metadata Access",
+        "version": "1.0",
+        "status": "active",
+        "parser": "REGEX",
+        "priority": "HIGH",
+        "severity": "HIGH",
+        "severityWeight": 15,
+        "category": "METADATA",
+        "subCategory": "Container Platform Dependencies",
+        "blockerType": "HIGH Priority Blocker",
+        "language": {
+          "name": "java",
+          "versions": ["8", "11", "17", "21"],
+          "frameworks": ["spring-boot:3.0", "jakarta-ee:10"]
+        },
+        "scope": null,
+        "detectionCriteria": {
+          "fileType": ["java", "properties", "yml"],
+          "searchPattern": [
+            "169\\.254\\.170\\.2",
+            "ECS_CONTAINER_METADATA_URI",
+            "ECS_TASK_METADATA",
+            "/v[234]/metadata"
+          ]
+        },
+        "migrationGuidance": "Replace with Kubernetes Downward API",
+        "effortEstimate": "4 hours",
+        "dashboardLabel": "ECS Task Metadata"
+      },
+      {
+        "ruleId": "rcp-java-0008",
+        "ruleName": "EC2 Instance Metadata Access",
+        "version": "1.0",
+        "status": "active",
+        "parser": "REGEX",
+        "priority": "MEDIUM",
+        "severity": "MEDIUM",
+        "severityWeight": 8,
+        "category": "METADATA",
+        "subCategory": "Container Platform Dependencies",
+        "blockerType": "MEDIUM Priority Blocker",
+        "language": {
+          "name": "java",
+          "versions": ["8", "11", "17", "21"],
+          "frameworks": ["spring-boot:3.0", "jakarta-ee:10"]
+        },
+        "scope": null,
+        "detectionCriteria": {
+          "fileType": ["java", "properties", "yml"],
+          "searchPattern": [
+            "169\\.254\\.169\\.254",
+            "instance-identity",
+            "ec2\\.metadata"
+          ]
+        },
+        "migrationGuidance": "Use Kubernetes Downward API or node labels",
+        "effortEstimate": "3 hours",
+        "dashboardLabel": "EC2 Instance Metadata"
+      },
+      {
+        "ruleId": "rcp-java-0009",
+        "ruleName": "Missing Health Check Endpoints",
+        "version": "1.0",
+        "status": "active",
+        "parser": "REGEX",
+        "priority": "MEDIUM",
+        "severity": "MEDIUM",
+        "severityWeight": 8,
+        "category": "HEALTH_CHECK",
+        "subCategory": "Container Platform Dependencies",
+        "blockerType": "MEDIUM Priority Blocker",
+        "language": {
+          "name": "java",
+          "versions": ["8", "11", "17", "21"],
+          "frameworks": ["spring-boot:3.0", "jakarta-ee:10"]
+        },
+        "scope": null,
+        "detectionCriteria": {
+          "fileType": ["java", "properties", "yml"],
+          "searchPattern": [
+            "/health",
+            "/healthz",
+            "@GetMapping.*health",
+            "@RequestMapping.*health",
+            "app\\.route\\([\\'\\\"].*health"
+          ],
+          "inverse": true
+        },
+        "migrationGuidance": "Implement /healthz (liveness) and /ready (readiness) endpoints",
+        "effortEstimate": "2 hours",
+        "dashboardLabel": "Missing Kubernetes Health Endpoints"
+      },
+      {
+        "ruleId": "rcp-java-0010",
+        "ruleName": "CloudWatch Direct Logging",
+        "version": "1.0",
+        "status": "active",
+        "parser": "REGEX",
+        "priority": "MEDIUM",
+        "severity": "MEDIUM",
+        "severityWeight": 8,
+        "category": "LOGGING",
+        "subCategory": "Container Platform Dependencies",
+        "blockerType": "MEDIUM Priority Blocker",
+        "language": {
+          "name": "java",
+          "versions": ["8", "11", "17", "21"],
+          "frameworks": ["spring-boot:3.0", "jakarta-ee:10"]
+        },
+        "scope": null,
+        "detectionCriteria": {
+          "fileType": ["java", "xml", "properties"],
+          "searchPattern": [
+            "import\\s+watchtower",
+            "CloudWatchLogHandler",
+            "boto3\\.client\\([\\'\\\"]logs[\\'\\\"]\\)",
+            "put_log_events"
+          ]
+        },
+        "migrationGuidance": "Use stdout/stderr logging; RCP captures container logs automatically",
+        "effortEstimate": "3 hours",
+        "dashboardLabel": "CloudWatch Direct Logging"
+      },
+      {
+        "ruleId": "rcp-java-0011",
+        "ruleName": "Platform-Specific Logging Drivers",
+        "version": "1.0",
+        "status": "active",
+        "parser": "REGEX",
+        "priority": "LOW",
+        "severity": "LOW",
+        "severityWeight": 3,
+        "category": "LOGGING",
+        "subCategory": "Container Platform Dependencies",
+        "blockerType": "LOW Priority",
+        "language": {
+          "name": "java",
+          "versions": ["8", "11", "17", "21"],
+          "frameworks": ["spring-boot:3.0", "jakarta-ee:10"]
+        },
+        "scope": null,
+        "detectionCriteria": {
+          "fileType": ["yml", "yaml", "properties", "conf"],
+          "searchPattern": [
+            "awslogs",
+            "log_driver.*awslogs",
+            "fluentd.*ecs"
+          ]
+        },
+        "migrationGuidance": "Remove platform-specific log drivers; use standard container logging",
+        "effortEstimate": "2 hours",
+        "dashboardLabel": "Platform-Specific Logging Drivers"
+      },
+      {
+        "ruleId": "rcp-java-0012",
+        "ruleName": "Hardcoded AWS Credentials",
+        "version": "1.0",
+        "status": "active",
+        "parser": "REGEX",
+        "priority": "CRITICAL",
+        "severity": "CRITICAL",
+        "severityWeight": 25,
+        "category": "SECURITY",
+        "subCategory": "Container Platform Dependencies",
+        "blockerType": "CRITICAL Security Blocker",
+        "language": {
+          "name": "java",
+          "versions": ["8", "11", "17", "21"],
+          "frameworks": ["spring-boot:3.0", "jakarta-ee:10"]
+        },
+        "scope": null,
+        "detectionCriteria": {
+          "fileType": ["java", "properties", "yml"],
+          "searchPattern": [
+            "aws_access_key_id\\s*=",
+            "aws_secret_access_key\\s*=",
+            "AWS_ACCESS_KEY",
+            "AWS_SECRET_KEY"
+          ]
+        },
+        "migrationGuidance": "Remove hardcoded credentials; use IRSA (IAM Roles for Service Accounts)",
+        "effortEstimate": "1 hour",
+        "dashboardLabel": "Hardcoded AWS Credentials"
+      },
+      {
+        "ruleId": "rcp-java-0013",
+        "ruleName": "ECS Task Role Assumptions",
+        "version": "1.0",
+        "status": "active",
+        "parser": "REGEX",
+        "priority": "MEDIUM",
+        "severity": "MEDIUM",
+        "severityWeight": 8,
+        "category": "AWS_SDK",
+        "subCategory": "Container Platform Dependencies",
+        "blockerType": "MEDIUM Priority Blocker",
+        "language": {
+          "name": "java",
+          "versions": ["8", "11", "17", "21"],
+          "frameworks": ["spring-boot:3.0", "jakarta-ee:10"]
+        },
+        "scope": null,
+        "detectionCriteria": {
+          "fileType": ["java", "properties", "yml"],
+          "searchPattern": [
+            "ECS_TASK_ROLE",
+            "task[-_]role",
+            "get_credentials.*ecs"
+          ]
+        },
+        "migrationGuidance": "Update to use IRSA; ensure service account annotations",
+        "effortEstimate": "3 hours",
+        "dashboardLabel": "ECS Task Role Assumptions"
+      },
+      {
+        "ruleId": "rcp-java-0014",
+        "ruleName": "ECS-Specific API Calls",
+        "version": "1.0",
+        "status": "active",
+        "parser": "REGEX",
+        "priority": "HIGH",
+        "severity": "HIGH",
+        "severityWeight": 15,
+        "category": "ORCHESTRATION",
+        "subCategory": "Container Platform Dependencies",
+        "blockerType": "HIGH Priority Blocker",
+        "language": {
+          "name": "java",
+          "versions": ["8", "11", "17", "21"],
+          "frameworks": ["spring-boot:3.0", "jakarta-ee:10"]
+        },
+        "scope": null,
+        "detectionCriteria": {
+          "fileType": ["java", "properties", "yml"],
+          "searchPattern": [
+            "boto3\\.client\\([\\'\\\"]ecs[\\'\\\"]\\)",
+            "ecs\\.describe_tasks",
+            "ecs\\.list_tasks",
+            "ecs\\.run_task"
+          ]
+        },
+        "migrationGuidance": "Replace ECS API calls with Kubernetes API or remove if not needed",
+        "effortEstimate": "12 hours",
+        "dashboardLabel": "ECS Orchestration APIs"
+      },
+      {
+        "ruleId": "rcp-java-0015",
+        "ruleName": "Docker Compose Dependencies",
+        "version": "1.0",
+        "status": "active",
+        "parser": "REGEX",
+        "priority": "LOW",
+        "severity": "LOW",
+        "severityWeight": 3,
+        "category": "ORCHESTRATION",
+        "subCategory": "Container Platform Dependencies",
+        "blockerType": "LOW Priority",
+        "language": {
+          "name": "java",
+          "versions": ["8", "11", "17", "21"],
+          "frameworks": ["spring-boot:3.0", "jakarta-ee:10"]
+        },
+        "scope": null,
+        "detectionCriteria": {
+          "fileType": ["yml", "yaml"],
+          "searchPattern": [
+            "depends_on:",
+            "docker-compose",
+            "docker_compose"
+          ]
+        },
+        "migrationGuidance": "Convert to Kubernetes init containers or pod dependencies",
+        "effortEstimate": "4 hours",
+        "dashboardLabel": "Docker Compose Dependencies"
+      },
+      {
+        "ruleId": "rcp-java-0016",
+        "ruleName": "Platform-Specific APM Configuration",
+        "version": "1.0",
+        "status": "active",
+        "parser": "REGEX",
+        "priority": "MEDIUM",
+        "severity": "MEDIUM",
+        "severityWeight": 8,
+        "category": "OBSERVABILITY",
+        "subCategory": "Container Platform Dependencies",
+        "blockerType": "MEDIUM Priority Blocker",
+        "language": {
+          "name": "java",
+          "versions": ["8", "11", "17", "21"],
+          "frameworks": ["spring-boot:3.0", "jakarta-ee:10"]
+        },
+        "scope": null,
+        "detectionCriteria": {
+          "fileType": ["java", "properties", "yml"],
+          "searchPattern": [
+            "DD_AGENT_HOST.*169\\.254",
+            "statsd.*ecs",
+            "DD_ECS_COLLECT"
+          ]
+        },
+        "migrationGuidance": "Update Datadog agent configuration for Kubernetes (EG Datadog)",
+        "effortEstimate": "3 hours",
+        "dashboardLabel": "Platform-Specific APM Configuration"
+      },
+      {
+        "ruleId": "rcp-java-0017",
+        "ruleName": "Missing Graceful Shutdown Handling",
+        "version": "1.0",
+        "status": "active",
+        "parser": "REGEX",
+        "priority": "MEDIUM",
+        "severity": "MEDIUM",
+        "severityWeight": 8,
+        "category": "SIGNAL_HANDLING",
+        "subCategory": "Container Platform Dependencies",
+        "blockerType": "MEDIUM Priority Blocker",
+        "language": {
+          "name": "java",
+          "versions": ["8", "11", "17", "21"],
+          "frameworks": ["spring-boot:3.0", "jakarta-ee:10"]
+        },
+        "scope": null,
+        "detectionCriteria": {
+          "fileType": ["java"],
+          "searchPattern": [
+            "Runtime\\.getRuntime\\(\\)\\.addShutdownHook",
+            "@PreDestroy",
+            "shutdown\\s*hook",
+            "spring\\.lifecycle\\.timeout-per-shutdown-phase"
+          ],
+          "inverse": true
+        },
+        "migrationGuidance": "Implement graceful shutdown handling for SIGTERM",
+        "effortEstimate": "4 hours",
+        "dashboardLabel": "Missing Graceful Shutdown"
+      }
+    ]
+  },
+  "summary": {
+    "byPriority": {
+      "CRITICAL": 1,
+      "HIGH": 7,
+      "MEDIUM": 7,
+      "LOW": 2
+    },
+    "byCategory": {
+      "SERVICE_DISCOVERY": 3,
+      "SECRETS_CONFIG": 3,
+      "METADATA": 2,
+      "HEALTH_CHECK": 1,
+      "LOGGING": 2,
+      "SECURITY": 1,
+      "AWS_SDK": 1,
+      "ORCHESTRATION": 2,
+      "OBSERVABILITY": 1,
+      "SIGNAL_HANDLING": 1
+    },
+    "severityWeights": {
+      "CRITICAL": 25,
+      "HIGH": 15,
+      "MEDIUM": 8,
+      "LOW": 3
+    },
+    "complexityLevels": {
+      "MINIMAL": {
+        "scoreRange": [0, 20],
+        "description": "Config-only changes"
+      },
+      "LOW": {
+        "scoreRange": [21, 40],
+        "description": "Minor code refactoring"
+      },
+      "MEDIUM": {
+        "scoreRange": [41, 60],
+        "description": "Moderate changes"
+      },
+      "HIGH": {
+        "scoreRange": [61, 80],
+        "description": "Significant refactoring"
+      },
+      "CRITICAL": {
+        "scoreRange": [81, 100],
+        "description": "Major effort needed"
+      }
+    }
+  }
+}
+

@@ -189,11 +189,10 @@
       "detectionCriteria": {
         "fileType": ["java", "properties", "yml"],
         "searchPattern": [
-          "/health",
-          "/healthz",
-          "@GetMapping.*health",
-          "@RequestMapping.*health",
-          "app\\.route\\([\\'\\\"].*health"
+          "@GetMapping\\s*\\(\\s*[\"']/healthz[\"']\\s*\\)",
+          "@RequestMapping\\s*\\(\\s*value\\s*=\\s*[\"']/healthz[\"']",
+          "@GetMapping\\s*\\(\\s*[\"']/(ready|readiness)[\"']\\s*\\)",
+          "@RequestMapping\\s*\\(\\s*value\\s*=\\s*[\"']/(ready|readiness)[\"']"
         ]
       }
     },
@@ -320,9 +319,12 @@
       "detectionCriteria": {
         "fileType": ["yml", "yaml"],
         "searchPattern": [
-          "depends_on:",
-          "docker-compose",
-          "docker_compose"
+          "^\\s*version\\s*:\\s*[\"']?[0-9]+\\.[0-9]+[\"']?\\s*$",
+          "^\\s*services\\s*:\\s*$",
+          "^\\s*depends_on\\s*:\\s*$",
+          "^\\s*build\\s*:\\s*$",
+          "docker-compose\\s+(up|down|build|start|stop|restart)",
+          "docker\\s+compose\\s+(up|down|build|start|stop|restart)"
         ]
       }
     },

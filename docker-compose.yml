@@ -1,29 +1,16 @@
 version: '3.8'
 
-# Docker Compose Dependencies pattern
 services:
   app:
     build: .
     ports:
       - "8080:8080"
     environment:
-      - ECS_CONTAINER_METADATA_URI=http://169.254.170.2/v4/metadata
       - ECS_TASK_ROLE=arn:aws:iam::123456789012:role/ecs-task-role
       - AWS_ACCESS_KEY=AKIAIOSFODNN7EXAMPLE
       - AWS_SECRET_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
       - DD_AGENT_HOST=169.254.170.2
       - DD_ECS_COLLECT=true
-    # depends_on: pattern
-    depends_on:
-      - eureka
-      - consul
-    # Platform-Specific Logging Drivers - awslogs pattern
-    logging:
-      driver: awslogs
-      options:
-        awslogs-group: ecs-sample-app
-        awslogs-region: us-east-1
-        awslogs-stream-prefix: app
 
   eureka:
     image: springcloud/eureka
